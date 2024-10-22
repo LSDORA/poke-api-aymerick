@@ -2,6 +2,8 @@ package fr.efrei.pokemon.models;
 
 import fr.efrei.pokemon.constants.Type;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
 @Entity
@@ -9,7 +11,10 @@ public class Attaque {
 
         @Id
         private String name;
+
+        @Enumerated(EnumType.STRING)
         private Type type;
+
         private int power;
 
         public String getName() {
