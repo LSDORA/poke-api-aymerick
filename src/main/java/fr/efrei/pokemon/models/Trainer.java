@@ -16,9 +16,16 @@ public class Trainer {
 	@OneToMany
 	private List<Pokemon> team;
 
+	@ElementCollection
+	private List<String> badges;
+
 	public String getId() {
 		return id;
 	}
+
+	private boolean isChampion = false;
+	@ManyToOne
+	private Arene arene;
 
 	public void setId(String id) {
 		this.id = id;
@@ -35,7 +42,8 @@ public class Trainer {
 	public List<Pokemon> getTeam() {
 		return team;
 	}
-
+	public List<String> getBadges() { return badges; }
+	public void setBadges(List<String> badges) { this.badges = badges; }
 	public void setTeam(List<Pokemon> team) {
 		this.team = team;
 	}
