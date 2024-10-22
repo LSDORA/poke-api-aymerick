@@ -3,6 +3,8 @@ package fr.efrei.pokemon.models;
 import fr.efrei.pokemon.constants.Type;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Pokemon {
 
@@ -14,8 +16,14 @@ public class Pokemon {
 
 	private int level;
 
+	private int healthPoints; // Points de vie
+
+	@ElementCollection // Pour stocker une liste d'énumérations (types)
 	@Enumerated(EnumType.STRING)
-	private Type type; // SI mon pokemon est type feu -> Type == "FEU"
+	private List<Type> types; // Liste des types
+
+	@ElementCollection // Pour stocker les attaques
+	private List<String> attacks; // Liste des attaques
 
 	public String getName() {
 		return name;
@@ -33,12 +41,20 @@ public class Pokemon {
 		this.level = level;
 	}
 
-	public Type getType() {
-		return type;
+	public int getHealthPoints() {
+		return healthPoints;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setHealthPoints(int healthPoints) {
+		this.healthPoints = healthPoints;
+	}
+
+	public List<Type> getTypes() {
+		return types;
+	}
+
+	public void setTypes(List<Type> types) {
+		this.types = types;
 	}
 
 	public String getId() {
