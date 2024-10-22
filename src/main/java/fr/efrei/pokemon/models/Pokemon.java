@@ -57,6 +57,14 @@ public class Pokemon {
 		this.types = types;
 	}
 
+	public List<String> getAttacks() {
+		return attacks;
+	}
+
+	public void setAttacks(List<String> attacks) {
+		this.attacks = attacks;
+	}
+
 	public String getId() {
 		return id;
 	}

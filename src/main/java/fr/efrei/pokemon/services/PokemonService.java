@@ -44,7 +44,9 @@ public class PokemonService {
 
 	public void update(String id, Pokemon pokemonBody) {
 		Pokemon pokemonAModifier = findById(id);
-		pokemonAModifier.setType(pokemonBody.getType());
+		pokemonAModifier.setHealthPoints(pokemonBody.getHealthPoints());
+		pokemonAModifier.setTypes(pokemonBody.getTypes());
+		pokemonAModifier.setAttacks(pokemonBody.getAttacks());
 		pokemonAModifier.setName(pokemonBody.getName());
 		pokemonAModifier.setLevel(pokemonBody.getLevel());
 		pokemonRepository.save(pokemonAModifier);
@@ -52,8 +54,8 @@ public class PokemonService {
 
 	public void partialUpdate(String id, Pokemon pokemonBody) {
 		Pokemon pokemonAModifier = findById(id);
-		if(pokemonBody.getType() != null) {
-			pokemonAModifier.setType(pokemonBody.getType());
+		if (pokemonBody.getTypes() != null) {
+			pokemonAModifier.setTypes(pokemonBody.getTypes());
 		}
 		if(pokemonBody.getName() != null) {
 			pokemonAModifier.setName(pokemonBody.getName());
