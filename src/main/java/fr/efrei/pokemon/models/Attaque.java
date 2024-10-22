@@ -1,21 +1,31 @@
 package fr.efrei.pokemon.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.efrei.pokemon.constants.Type;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Attaque {
 
-        @Id
-        private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+
+
+    private String name;
 
         @Enumerated(EnumType.STRING)
         private Type type;
 
-        private int power;
+        @ManyToMany(mappedBy = "attacks")
+        @JsonIgnore
+        private List<Pokemon> pokemons;
+
+
+    private int power;
 
         public String getName() {
             return name;
@@ -41,5 +51,11 @@ public class Attaque {
             this.power = power;
         }
 
+    public List<Pokemon> getPokemons() {
+        return pokemons;
+    }
 
+    public void setPokemons(List<Pokemon> pokemons) {
+        this.pokemons = pokemons;
+    }
 }

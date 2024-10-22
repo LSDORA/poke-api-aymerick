@@ -97,34 +97,56 @@ public class AreneController {
     }
 
     private String lancerDefi(Arene arene, Trainer trainer) {
-        return "Le trainer " + trainer.getName() + " a défié l'arène " + arene.getName();
-    }
+        String challengeMessage = "Le trainer " + trainer.getName() + " a défié l'arène " + arene.getName() + ".\n";
 
+        // Démarrer le combat après avoir lancé le défi
+        Pokemon championPokemon = arene.getChampion().getTeam().get(0);
+        Pokemon trainerPokemon = trainer.getTeam().get(0);
+        String combatResult = commencerCombat(championPokemon, trainerPokemon);
+
+        return challengeMessage + combatResult;
+    }
     @PostMapping("/{id}/combat")
     public ResponseEntity<String> lancerCombat(@PathVariable Long id, @RequestParam String trainerName) {
         Arene arene = service.findById(id);
         if (arene == null) {
             return new ResponseEntity<>("Arene non trouvée", HttpStatus.NOT_FOUND);
         }
-
         Trainer trainer = trainerService.findByName(trainerName);
         if (trainer == null) {
             return new ResponseEntity<>("Trainer non trouvé", HttpStatus.NOT_FOUND);
         }
-
         Pokemon championPokemon = arene.getChampion().getTeam().get(0);
         Pokemon trainerPokemon = trainer.getTeam().get(0);
-        String combatResult = executerAttaque(championPokemon, trainerPokemon);
+
+        String combatResult = commencerCombat(championPokemon, trainerPokemon);
         return new ResponseEntity<>(combatResult, HttpStatus.OK);
     }
 
+    private String commencerCombat(Pokemon championPokemon, Pokemon trainerPokemon) {
+        StringBuilder combatLog = new StringBuilder();
+        while (championPokemon.getHealthPoints() > 0 && trainerPokemon.getHealthPoints() > 0) {
+            combatLog.append(executerAttaque(championPokemon, trainerPokemon)).append("\n");
+            if (trainerPokemon.getHealthPoints() <= 0) {
+                break;
+            }
+            combatLog.append(executerAttaque(trainerPokemon, championPokemon)).append("\n");
+        }
+        if (championPokemon.getHealthPoints() <= 0) {
+            combatLog.append(championPokemon.getName()).append(" a été vaincu par ").append(trainerPokemon.getName()).append(" !");
+        } else if (trainerPokemon.getHealthPoints() <= 0) {
+            combatLog.append(trainerPokemon.getName()).append(" a été vaincu par ").append(championPokemon.getName()).append(" !");
+        }
+        return combatLog.toString();
+    }
     private String executerAttaque(Pokemon attacker, Pokemon defender) {
+        if (attacker.getAttacks().isEmpty()) {
+            return attacker.getName() + " n'a pas d'attaques disponibles!";
+        }
         Attaque firstAttack = attacker.getAttacks().get(0);
         int damage = firstAttack.getPower();
         defender.setHealthPoints(defender.getHealthPoints() - damage);
-        if (defender.getHealthPoints() <= 0) {
-            return defender.getName() + " a été vaincu par " + attacker.getName() + "!";
-        }
+
         return defender.getName() + " a " + defender.getHealthPoints() + " points de vie restants après l'attaque de " + attacker.getName();
     }
 

@@ -22,8 +22,14 @@ public class Pokemon {
 	@Enumerated(EnumType.STRING)
 	//private List<Type> types; // Liste des types
 	private Type type;
-	@ElementCollection
-	private List<String> attacks;
+
+	@ManyToMany
+	@JoinTable(
+			name = "POKEMON_ATTACKS",
+			joinColumns = @JoinColumn(name = "POKEMON_ID"),
+			inverseJoinColumns = @JoinColumn(name = "ATTACK_ID")
+	)
+	private List<Attaque> attacks;
 
 	public Pokemon() {
 		this.healthPoints = 100;
@@ -67,11 +73,11 @@ public class Pokemon {
 		this.type = type;
 	}
 
-	public List<String> getAttacks() {
+	public List<Attaque> getAttacks() {
 		return attacks;
 	}
 
-	public void setAttacks(List<String> attacks) {
+	public void setAttacks(List<Attaque> attacks) {
 		this.attacks = attacks;
 	}
 
