@@ -29,6 +29,9 @@ public class Pokemon {
 		this.healthPoints = 100;
 	}
 
+	public Attaque getRandomAttack(){
+        return null;
+    }
 
 	public String getName() {
 		return name;

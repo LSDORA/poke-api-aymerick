@@ -28,6 +28,10 @@ public class TrainerService {
 		return repository.findAll();
 	}
 
+	public Trainer findByName(String name) {
+		return repository.findByName(name);
+	}
+
 	public Trainer findById(String id) {
 		return repository.findById(id).orElse(null);
 	}
