@@ -34,6 +34,9 @@ public class PokemonService {
 	// Controller -> Service -> Repository -> Entité -> BDD
 	public void save(Pokemon pokemon) {
 		// INSERT INTO pokemon VALUES (:name, :level, :type);
+		if (pokemon.getHealthPoints() == null) {
+			pokemon.setHealthPoints(100); // Ou une autre valeur par défaut
+		}
 		pokemonRepository.save(pokemon);
 	}
 

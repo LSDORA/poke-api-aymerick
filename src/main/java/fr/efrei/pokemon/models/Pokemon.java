@@ -16,14 +16,19 @@ public class Pokemon {
 
 	private int level;
 
-	private int healthPoints; // Points de vie
+	private Integer healthPoints = 100;
 
-	@ElementCollection // Pour stocker une liste d'énumérations (types)
+	//@ElementCollection
 	@Enumerated(EnumType.STRING)
-	private List<Type> types; // Liste des types
+	//private List<Type> types; // Liste des types
+	private Type type;
+	@ElementCollection
+	private List<String> attacks;
 
-	@ElementCollection // Pour stocker les attaques
-	private List<String> attacks; // Liste des attaques
+	public Pokemon() {
+		this.healthPoints = 100;
+	}
+
 
 	public String getName() {
 		return name;
@@ -41,20 +46,22 @@ public class Pokemon {
 		this.level = level;
 	}
 
-	public int getHealthPoints() {
+	public Integer getHealthPoints() {
 		return healthPoints;
 	}
 
-	public void setHealthPoints(int healthPoints) {
+	public void setHealthPoints(Integer healthPoints) {
 		this.healthPoints = healthPoints;
 	}
 
-	public List<Type> getTypes() {
-		return types;
+	public /*List<Type>*/ Type getTypes() {
+		//return types;
+		return type;
 	}
 
-	public void setTypes(List<Type> types) {
-		this.types = types;
+	public void setTypes(/*List<Type> types */ Type type) {
+		//this.types = types;
+		this.type = type;
 	}
 
 	public List<String> getAttacks() {
